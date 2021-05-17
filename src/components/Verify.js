@@ -209,21 +209,22 @@ const Verify = (props) => {
     document.title = `Verify - ${documentTitle}`;
     props.verifyDispatch.updateFilter(props.verifyState.filter);
     props.verifyDispatch.loadCaptureImages();
-    props.verifyDispatch.getTreeCount();
-    props.organizationDispatch.loadOrganizations();
+    props.verifyDispatch.getCaptureCount();
   }, []);
 
   /* to display progress */
   useEffect(() => {
-    log.debug('set complete trees');
     setComplete(props.verifyState.approveAllComplete);
   }, [props.verifyState.approveAllComplete]);
 
+  /* To update capture count */
+  useEffect(() => {
+    props.verifyDispatch.getCaptureCount();
+  }, [props.verifyDispatch, props.verifyState.captureImages]);
+
   /* load more captures when the page or page size changes */
   useEffect(() => {
-    log.debug('get captures & tree count when page changes');
     props.verifyDispatch.loadCaptureImages();
-    props.verifyDispatch.getCaptureCount();
   }, [props.verifyState.pageSize, props.verifyState.currentPage]);
 
   function handleCaptureClick(e, captureId) {
@@ -342,7 +343,9 @@ const Verify = (props) => {
   }
 
   function handleChangePageSize(event) {
-    props.verifyDispatch.set({ pageSize: event.target.value });
+    props.verifyDispatch.set({
+      pageSize: event.target.value,
+    });
   }
 
   function handleChangePage(event, page) {
@@ -849,7 +852,7 @@ function SidePanel(props) {
                   onClick={() => setRejectionReason('unapproved_tree')}
                   value="unapproved_tree"
                   control={<Radio />}
-                  label="Not an approved tree"
+                  label="Not an approved capture"
                 />
                 <FormControlLabel
                   onClick={() => setRejectionReason('blurry_image')}
@@ -934,16 +937,12 @@ export default connect(
   (state) => ({
     verifyState: state.verify,
     speciesState: state.species,
-    //plantersState: state.planters,
-    organizationState: state.organizations,
     tagState: state.tags,
   }),
   //dispatch
   (dispatch) => ({
     verifyDispatch: dispatch.verify,
     speciesDispatch: dispatch.species,
-    // plantersDispatch: dispatch.planters,
-    organizationDispatch: dispatch.organizations,
     tagDispatch: dispatch.tags,
   }),
 )(Verify);
