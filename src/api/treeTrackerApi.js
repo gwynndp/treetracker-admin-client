@@ -267,7 +267,32 @@ export default {
    */
   getSpecies(abortController) {
     try {
-      const query = `${API_ROOT}/api/species?filter[order]=name`;
+      // const query = `${API_ROOT}/api/species?filter[order]=name`;
+      // {
+      //   "id": 171,
+      //   "name": "Coconut",
+      //   "desc": "A tropical tree",
+      //   "active": true,
+      //   "valueFactor": 0
+      //   "uuid": "cd1b5cda-e44b-4522-a502-c3533e152f47",
+      // }
+
+      const query = `${QUERY_API}/v2/species`;
+      // {
+      //   "total": null,
+      //   "offset": 0,
+      //   "limit": 20,
+      //   "species": [
+      //     {
+      //       "id": "c836f264-c2f6-4a0d-8119-87bda69619a9",
+      //       "scientific_name": "species test 6",
+      //       "description": "species test 6",
+      //       "morphology": null,
+      //       "range": null,
+      //       "created_at": "2023-07-31T01:21:09.014Z",
+      //       "updated_at": "2023-07-31T01:21:09.014Z"
+      //     }
+      //   }
 
       return fetch(query, {
         method: 'GET',

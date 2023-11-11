@@ -90,7 +90,7 @@ function Filter(props) {
     filter?.startDate || startDateDefault
   );
   const [endDate, setEndDate] = useState(filter?.endDate || endDateDefault);
-  const [speciesId, setSpeciesId] = useState(filter?.speciesId || ALL_SPECIES);
+  const [speciesId, setSpeciesId] = useState(filter?.speciesId || '');
   const [tag, setTag] = useState(null);
   const [tagSearchString, setTagSearchString] = useState('');
   const [organizationId, setOrganizationId] = useState(ALL_ORGANIZATIONS);
@@ -148,6 +148,15 @@ function Filter(props) {
     const filter = new FilterModel();
     props.onSubmit && props.onSubmit(filter);
   }
+
+  const defaultSpeciesList = [
+    { uuid: ALL_SPECIES, name: filterOptionAll },
+    { uuid: SPECIES_ANY_SET, name: 'Any set' },
+    {
+      uuid: SPECIES_NOT_SET,
+      name: 'Not set',
+    },
+  ];
 
   return (
     <>
@@ -259,26 +268,21 @@ function Filter(props) {
                 value={speciesId}
                 onChange={(e) => setSpeciesId(e.target.value)}
               >
-                {speciesContext.isLoading ? (
+                {speciesContext.isLoading ||
+                !speciesContext.speciesList.length ? (
                   <CircularProgress />
                 ) : (
-                  [
-                    { uuid: ALL_SPECIES, name: filterOptionAll },
-                    { uuid: SPECIES_ANY_SET, name: 'Any set' },
-                    {
-                      uuid: SPECIES_NOT_SET,
-                      name: 'Not set',
-                    },
-                    ...speciesContext.speciesList,
-                  ].map((species) => (
-                    <MenuItem
-                      data-testid="species-item"
-                      key={species.uuid}
-                      value={species.uuid}
-                    >
-                      {species.name}
-                    </MenuItem>
-                  ))
+                  [...defaultSpeciesList, ...speciesContext.speciesList].map(
+                    (species) => (
+                      <MenuItem
+                        data-testid="species-item"
+                        key={species.uuid}
+                        value={species.uuid}
+                      >
+                        {species.name}
+                      </MenuItem>
+                    )
+                  )
                 )}
               </TextField>
               <Autocomplete

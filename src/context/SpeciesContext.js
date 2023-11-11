@@ -34,7 +34,7 @@ export function SpeciesProvider(props) {
 
   const loadSpeciesList = async (abortController) => {
     setIsLoading(true);
-    const species = await api.getSpecies(abortController);
+    const { species } = await api.getSpecies(abortController);
     setSpeciesList(species);
     setIsLoading(false);
   };
