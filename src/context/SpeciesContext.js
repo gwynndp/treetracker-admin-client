@@ -58,7 +58,7 @@ export function SpeciesProvider(props) {
       speciesList.length
     );
     return speciesList.every(
-      (c) => c.name.toLowerCase() !== speciesInput.toLowerCase()
+      (c) => c.scientific_name.toLowerCase() !== speciesInput.toLowerCase()
     );
   };
 
@@ -79,8 +79,8 @@ export function SpeciesProvider(props) {
       return speciesList.reduce((a, c) => {
         if (a) {
           return a;
-        } else if (c.name === speciesInput) {
-          return c.uuid;
+        } else if (c.scientific_name === speciesInput) {
+          return c.id;
         } else {
           return a;
         }

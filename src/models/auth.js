@@ -26,7 +26,7 @@ const POLICIES = {
 
 function hasPermission(user, p) {
   // Chris github - BirdTho 9/21 user may fail if called when logged out, as in the case in Context.js
-  // console.assert(user, "Why user fail?", user);
+  console.assert(user, 'Why user fail?', p);
   if (!user) return false;
   if (p instanceof Array) {
     return p.some((permission) => {

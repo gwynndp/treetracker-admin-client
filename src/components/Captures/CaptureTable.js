@@ -139,7 +139,7 @@ const CaptureTable = () => {
   const populateSpeciesLookup = async () => {
     let species = {};
     speciesContext.speciesList.forEach((s) => {
-      species[s.uuid] = s.name;
+      species[s.id] = s.scientific_name;
     });
     setSpeciesLookup(species);
   };

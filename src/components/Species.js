@@ -26,9 +26,9 @@ function Species(props) {
       ) : (
         <Autocomplete
           options={speciesContext.speciesList}
-          getOptionLabel={(option) => option.name}
+          getOptionLabel={(option) => option.scientific_name}
           onChange={(_event, value) => {
-            speciesContext.onChange((value && value.name) || '');
+            speciesContext.onChange((value && value.scientific_name) || '');
           }}
           onInputChange={(_event, value) => {
             speciesContext.onChange(value || '');

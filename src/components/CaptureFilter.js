@@ -150,11 +150,11 @@ function Filter(props) {
   }
 
   const defaultSpeciesList = [
-    { uuid: ALL_SPECIES, name: filterOptionAll },
-    { uuid: SPECIES_ANY_SET, name: 'Any set' },
+    { id: ALL_SPECIES, scientific_name: filterOptionAll },
+    { id: SPECIES_ANY_SET, scientific_name: 'Any set' },
     {
-      uuid: SPECIES_NOT_SET,
-      name: 'Not set',
+      id: SPECIES_NOT_SET,
+      scientific_name: 'Not set',
     },
   ];
 
@@ -268,18 +268,17 @@ function Filter(props) {
                 value={speciesId}
                 onChange={(e) => setSpeciesId(e.target.value)}
               >
-                {speciesContext.isLoading ||
-                !speciesContext.speciesList.length ? (
+                {speciesContext.isLoading ? (
                   <CircularProgress />
                 ) : (
                   [...defaultSpeciesList, ...speciesContext.speciesList].map(
                     (species) => (
                       <MenuItem
                         data-testid="species-item"
-                        key={species.uuid}
-                        value={species.uuid}
+                        key={species.id}
+                        value={species.id}
                       >
-                        {species.name}
+                        {species.scientific_name}
                       </MenuItem>
                     )
                   )
